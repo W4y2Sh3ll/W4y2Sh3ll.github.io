@@ -73,7 +73,7 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.2.0"></head>
 
 
 <body>
@@ -272,6 +272,82 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" target="_self">
+          2-SPIFF 论文阅读笔记
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" target="_self">
+        <div>
+          Abstract许多恶意软件通过加壳来绕过检测，因此准确高效的加壳器识别（Packer Identification）方法对恶意软件检测来说十分重要，本文给出2-SPIFF——一种2段式的加壳器识别方法，阶段一通过从程序的FCG图中提取特征来辨别程序是否加壳，阶段二通过从FCG图和文件属性中提取的融合特征来识别加壳器。 0x01. Background恶意软件会对组织或个人设备造成严重损坏，许多恶
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-04-19 17:36" pubdate>
+              2024-04-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="category-chain-item">论文阅读</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6%E6%A3%80%E6%B5%8B/" class="category-chain-item">恶意软件检测</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">#论文阅读</a>
+            
+              <a href="/tags/%E5%A3%B3%E6%A3%80%E6%B5%8B/">#壳检测</a>
+            
+              <a href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6%E6%A3%80%E6%B5%8B/">#恶意软件检测</a>
+            
+              <a href="/tags/malware-detection/">#malware detection</a>
+            
+              <a href="/tags/paker-detection/">#paker detection</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2024/04/17/arm-pwn-%E7%AC%94%E8%AE%B0/" target="_self">
           arm pwn 笔记
         </a>
@@ -280,7 +356,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2024/04/17/arm-pwn-%E7%AC%94%E8%AE%B0/" target="_self">
         <div>
-          汇编跳转指令 X29寄存器作用相当于x64的rbp，X30寄存器用于保存返回地址，当执行RET指令时，会将X30的值赋值给PC寄存器。PC寄存器即x64的rsp。  b指令跳转到某个标签处，单纯的jmp  BL指令用于跳转，并且会将返回地址保存在X30寄存器中。然后函数开头一般就会将这两个寄存器的值保存到栈里。  LDP X29, X30, [SP+var_s0],#0x10;RET 指令，相当于
+          环境arm软件包12sudo apt search &quot;libc6-&quot; | grep &quot;arm&quot;sudo apt install libc6-arm64-cross 安装好的库&#x2F;usr&#x2F;aarch64-linux-gnu&#x2F;lib&#x2F;目录下 汇编跳转指令 X29寄存器作用相当于x64的rbp，X30寄存器用于保存返回地址，当
         </div>
       </a>
 
@@ -343,7 +419,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2024/04/17/mips-pwn-%E7%AC%94%E8%AE%B0/" target="_self">
         <div>
-          启动Step 11qemu-mipsel -g 9000 -L ./mips mips or 1io = process([&quot;qemu-mipsel&quot;,&quot;-g&quot;,&quot;9000&quot;,&quot;-L&quot;,&quot;./mips&quot;,&quot;mips&quot;]) Step 21gdb-multiarch -q mips
+          环境qemu1sudo apt install --install-suggests qemu  gdb-multiarch1sudo apt-get install gdb-multiarch  mips软件包12345&lt;!-- 具备MIPS交叉编译gcc与MIPS程序动态链接库 --&gt;sudo apt-get install gcc-mips-linux-gnusudo apt-g
         </div>
       </a>
 
@@ -587,9 +663,9 @@
             
               <a href="/tags/CTF/">#CTF</a>
             
-              <a href="/tags/WP/">#WP</a>
-            
               <a href="/tags/HGAME/">#HGAME</a>
+            
+              <a href="/tags/WP/">#WP</a>
             
           </div>
         
@@ -659,11 +735,11 @@
             
               <a href="/tags/CTF/">#CTF</a>
             
+              <a href="/tags/WP/">#WP</a>
+            
               <a href="/tags/NepNep/">#NepNep</a>
             
               <a href="/tags/CatCtf/">#CatCtf</a>
-            
-              <a href="/tags/WP/">#WP</a>
             
           </div>
         
@@ -826,69 +902,6 @@
               <a href="/tags/BUU/">#BUU</a>
             
               <a href="/tags/PWN/">#PWN</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/12/07/%E6%B5%99%E7%90%86%E4%BD%93%E8%82%B2%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" target="_self">
-          浙理体育逆向分析
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/12/07/%E6%B5%99%E7%90%86%E4%BD%93%E8%82%B2%E9%80%86%E5%90%91%E5%88%86%E6%9E%90/" target="_self">
-        <div>
-          看了qfrost师傅的文章“红蜻蜓”跑步APP逆向分析与数据伪造思路后，自己写了一个刷120km的脚本，新版本的浙理体育有些小改动，但大致不变，抓下上传时发送的包，修改下跑步时间就能构造伪造数据送给服务器，建议先看qfrost师傅的文章 抓包fiddler抓上传时的包，gzip解密就可以看到上传数据的格式              {‘begintime’:’’,‘endtime’:’’,‘uid
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-12-07 18:45" pubdate>
-              2022-12-07
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Utility/" class="category-chain-item">Utility</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E9%80%86%E5%90%91/">#逆向</a>
-            
-              <a href="/tags/Re/">#Re</a>
             
           </div>
         

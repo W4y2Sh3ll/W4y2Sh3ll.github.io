@@ -16,19 +16,21 @@
   <meta name="author" content="W4y2Sh3ll">
   <meta name="keywords" content="">
   
-    <meta name="description" content="汇编跳转指令 X29寄存器作用相当于x64的rbp，X30寄存器用于保存返回地址，当执行RET指令时，会将X30的值赋值给PC寄存器。PC寄存器即x64的rsp。  b指令跳转到某个标签处，单纯的jmp  BL指令用于跳转，并且会将返回地址保存在X30寄存器中。然后函数开头一般就会将这两个寄存器的值保存到栈里。  LDP X29, X30, [SP+var_s0],#0x10;RET 指令，相当于">
+    <meta name="description" content="环境arm软件包12sudo apt search &quot;libc6-&quot; | grep &quot;arm&quot;sudo apt install libc6-arm64-cross 安装好的库&#x2F;usr&#x2F;aarch64-linux-gnu&#x2F;lib&#x2F;目录下 汇编跳转指令 X29寄存器作用相当于x64的rbp，X30寄存器用于保存返回地址，当">
 <meta property="og:type" content="article">
 <meta property="og:title" content="arm pwn 笔记">
 <meta property="og:url" content="https://www.w4y2sh3ll.top/2024/04/17/arm-pwn-%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="W4y2Sh3ll">
-<meta property="og:description" content="汇编跳转指令 X29寄存器作用相当于x64的rbp，X30寄存器用于保存返回地址，当执行RET指令时，会将X30的值赋值给PC寄存器。PC寄存器即x64的rsp。  b指令跳转到某个标签处，单纯的jmp  BL指令用于跳转，并且会将返回地址保存在X30寄存器中。然后函数开头一般就会将这两个寄存器的值保存到栈里。  LDP X29, X30, [SP+var_s0],#0x10;RET 指令，相当于">
+<meta property="og:description" content="环境arm软件包12sudo apt search &quot;libc6-&quot; | grep &quot;arm&quot;sudo apt install libc6-arm64-cross 安装好的库&#x2F;usr&#x2F;aarch64-linux-gnu&#x2F;lib&#x2F;目录下 汇编跳转指令 X29寄存器作用相当于x64的rbp，X30寄存器用于保存返回地址，当">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.w4y2sh3ll.top/1.png">
 <meta property="article:published_time" content="2024-04-17T08:59:38.000Z">
-<meta property="article:modified_time" content="2024-04-17T09:03:38.947Z">
+<meta property="article:modified_time" content="2024-04-19T09:35:32.966Z">
 <meta property="article:author" content="W4y2Sh3ll">
 <meta property="article:tag" content="笔记">
 <meta property="article:tag" content="arm pwn">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.w4y2sh3ll.top/1.png">
   
   
   
@@ -83,7 +85,7 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.2.0"></head>
 
 
 <body>
@@ -232,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          626 字
+          872 字
         
       </span>
     
@@ -243,7 +245,7 @@
         
         
         
-          6 分钟
+          8 分钟
         
       </span>
     
@@ -286,7 +288,9 @@
             
               <div class="markdown-body">
                 
-                <h1 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h1><h2 id="跳转指令"><a href="#跳转指令" class="headerlink" title="跳转指令"></a>跳转指令</h2><ul>
+                <h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><h2 id="arm软件包"><a href="#arm软件包" class="headerlink" title="arm软件包"></a>arm软件包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs BASH">sudo apt search <span class="hljs-string">&quot;libc6-&quot;</span> | grep <span class="hljs-string">&quot;arm&quot;</span><br>sudo apt install libc6-arm64-cross<br></code></pre></td></tr></table></figure>
+<p>安装好的库&#x2F;usr&#x2F;aarch64-linux-gnu&#x2F;lib&#x2F;目录下</p>
+<h1 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h1><h2 id="跳转指令"><a href="#跳转指令" class="headerlink" title="跳转指令"></a>跳转指令</h2><ul>
 <li><p>X29寄存器作用相当于x64的rbp，X30寄存器用于保存返回地址，当执行RET指令时，会将X30的值赋值给PC寄存器。PC寄存器即x64的rsp。</p>
 </li>
 <li><p>b指令跳转到某个标签处，单纯的jmp</p>
@@ -312,9 +316,19 @@
 <li><p>ADD   X0, X0, #label@PAGEOFF指令，偏移加上基地址，得到label的地址。</p>
 </li>
 </ul>
-<h1 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h1><h2 id="传参方式"><a href="#传参方式" class="headerlink" title="传参方式"></a>传参方式</h2><p>用$a0~$a3传递函数的前4个参数，记忆方法，寄存器名字a实际为argument的缩写，多余的参数用栈传递</p>
-<h2 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h2><p>W0、X1、X2寄存器用于前3个参数</p>
-
+<h1 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h1><h2 id="传参方式"><a href="#传参方式" class="headerlink" title="传参方式"></a>传参方式</h2><p>用$R0~$R3传递函数的前4个参数，其余参数从右到左入栈</p>
+<h2 id="相似处"><a href="#相似处" class="headerlink" title="相似处"></a>相似处</h2><ul>
+<li>R13 相当于栈指针ESP&#x2F;RSP</li>
+<li>PC 相当于EIP&#x2F;RIP指针</li>
+<li>LR link register 保存返回地址的寄存器</li>
+<li>BL 相当于call ， 跳转并把返回值保存到LR中</li>
+<li>B 相当于jmp</li>
+<li>BX 跳转并切换状态 ARM 与THUMB 指令</li>
+<li>BLX 带返回的跳转并切换状态</li>
+</ul>
+<h2 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h2><p>返回值存放在r0</p>
+<h1 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h1><p><img src="/1.png" srcset="/img/loading.gif" lazyload></p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
                 
               </div>
             
@@ -406,6 +420,12 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="2-SPIFF 论文阅读笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2-SPIFF 论文阅读笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
@@ -493,6 +513,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -686,6 +712,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

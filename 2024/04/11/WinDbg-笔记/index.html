@@ -83,7 +83,7 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.2.0"></head>
 
 
 <body>
@@ -298,7 +298,7 @@
 
 <h1 id="堆栈操作"><a href="#堆栈操作" class="headerlink" title="堆栈操作"></a>堆栈操作</h1><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">k  <span class="hljs-string">//</span> 显示当前调用堆栈<br>kn <span class="hljs-string">//</span> 带栈编号显示当前调用堆栈<br>kb  <span class="hljs-string">//</span> 打印出前3个函数参数的当前调用堆栈<br>kb 5 <span class="hljs-string">//</span> 只显示最上的5层调用堆栈<br><br>kv   <span class="hljs-string">//</span> 在kb的基础上增加了函数调用约定、FPO等信息<br>kp  <span class="hljs-string">//</span> 显示每一层函数调用的完整参数，包括参数类型、名字、取值<br>kd  <span class="hljs-string">//</span> 打印堆栈的地址<br>kD  <span class="hljs-string">//</span> 从当前esp地址处，向高地址方向搜索符号（注：函数是符号的一种）<br>dds 02a9ffec  <span class="hljs-string">//</span> 从02a9ffec地址处，向高地址方向搜索符号（注：函数是符号的一种）<br>dds  <span class="hljs-string">//</span> 执行完dds 02a9ffec后，可通过dds命令继续进行搜索<br><br><span class="hljs-string">.frame</span> <span class="hljs-string">//</span> 显示当前栈帧<br><span class="hljs-string">.frame</span> n  <span class="hljs-string">//</span> 显示编号为n的栈帧（n为16进制数）<br><span class="hljs-string">.frame</span> <span class="hljs-string">/r</span> n <span class="hljs-string">//</span> 显示编号n的栈帧（n为16进制数） 并显示寄存器变量<br><span class="hljs-string">.frame</span> <span class="hljs-string">/c</span> n <span class="hljs-string">//</span> 设置编号n的栈帧为当前栈帧（n为16进制数）<br>!uniqstack <span class="hljs-string">//</span> 显示所有线程的调用堆栈<br>!findstack kernel32 2 <span class="hljs-string">//</span> 显示包含kernel32模块（用星号标出）的所有栈的信息<br>!heap -s  <span class="hljs-string">//</span> 显示进程堆的个数<br>dt _HEAP 00140000  <span class="hljs-string">//</span> 选取一个堆的地址，打印该堆的内存结构<br>!heap -a 00140000 <span class="hljs-string">//</span> 选取一个堆的地址，打印该堆的信息，比上面打印内存命令更详细直观<br></code></pre></td></tr></table></figure>
 
-<h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">dt ntdll!* // 显示ntdll里的所有类型信息<br>dt -rv <span class="hljs-emphasis">_TEB</span><br><span class="hljs-emphasis">dt -rv _PEB</span><br><span class="hljs-emphasis">dt -v _PEB @$PEB</span><br><span class="hljs-emphasis">dt _PEB_LDR_DATA</span><br><span class="hljs-emphasis">dt _</span>TEB ny LastErrorValue // 只查看TEB（thread&#x27;s environment block）结构成员LastErrorValue<br><br>dt <span class="hljs-emphasis">_eprocess</span><br><span class="hljs-emphasis">dt _</span>eprocess 0x510<br><br>!dh 773a0000                 显示文件PE头<br><br><span class="hljs-strong">*是通配符；显示所有peb打头的结构体名称；</span><br><span class="hljs-strong">dt ntdll!_peb*</span><br><br>0:000&gt; dt -rv ntkrnlmp!<span class="hljs-strong">*Object*</span>  枚举ntkrnlmp中带&quot;Object&quot;的结构体名称；<br><br><span class="hljs-title">.attach  PID  附加进程</span><br><span class="hljs-title">.detach         结束会话</span><br><br><span class="hljs-title">.dump  文件名  转存文件</span><br><span class="hljs-title">.opendump     打开文件</span><br><br>dt -v ntdll!*           # 列出ntdll中的全部结构体，导出的函数名也会列出<br><br>dt ntdll!<span class="hljs-strong">*file*</span>           # 下面命令将列出ntdll导出的文件操作相关的函数名<br>dt <span class="hljs-emphasis">_FILE_INFORMATION_CLASS      查看一个结构定义</span><br><span class="hljs-emphasis">dt ntdll!_</span>*   列出ntdll中结构体<br></code></pre></td></tr></table></figure>
+<h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">dt ntdll!* // 显示ntdll里的所有类型信息<br>dt -rv <span class="hljs-emphasis">_TEB</span><br><span class="hljs-emphasis">dt -rv _PEB</span><br><span class="hljs-emphasis">dt -v _PEB @$PEB</span><br><span class="hljs-emphasis">dt _PEB_LDR_DATA</span><br><span class="hljs-emphasis">dt _</span>TEB ny LastErrorValue // 只查看TEB（thread&#x27;s environment block）结构成员LastErrorValue<br><br>dt <span class="hljs-emphasis">_eprocess</span><br><span class="hljs-emphasis">dt _</span>eprocess 0x510<br><br>!dh 773a0000                 显示文件PE头<br><br><span class="hljs-strong">*是通配符；显示所有peb打头的结构体名称；</span><br><span class="hljs-strong">dt ntdll!_peb*</span><br><br>0:000&gt; dt -rv ntkrnlmp!<span class="hljs-strong">*Object*</span>  枚举ntkrnlmp中带&quot;Object&quot;的结构体名称；<br><br><span class="hljs-title">.attach  PID  附加进程</span><br><span class="hljs-title">.detach         结束会话</span><br><br><span class="hljs-title">.dump  文件名  转存文件</span><br><span class="hljs-title">.opendump     打开文件</span><br><br>dt -v ntdll!*           # 列出ntdll中的全部结构体，导出的函数名也会列出<br><br>dt ntdll!<span class="hljs-strong">*file*</span>           # 下面命令将列出ntdll导出的文件操作相关的函数名<br>dt <span class="hljs-emphasis">_FILE_INFORMATION_CLASS      查看一个结构定义</span><br><span class="hljs-emphasis">dt ntdll!_</span>*   列出ntdll中结构体<br></code></pre></td></tr></table></figure><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
                 
               </div>
             
@@ -483,6 +483,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -676,6 +682,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
