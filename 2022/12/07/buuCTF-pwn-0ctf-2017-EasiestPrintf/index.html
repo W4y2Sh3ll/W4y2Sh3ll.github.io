@@ -23,9 +23,9 @@
 <meta property="og:site_name" content="W4y2Sh3ll">
 <meta property="og:description" content="0x01 分析  没开PIE    可以leak任意地址指向的数据    存在格式化字符串漏洞  0x02 利用 首先leak got表指向的libc函数地址 利用格式字符串漏洞修改__malloc_hook位one_gadget 通过printf打印超过65536个字符来调用malloc  0x03 Exp123456789101112131415161718192021222324252627">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.w4y2sh3ll.top/1.png">
-<meta property="og:image" content="https://www.w4y2sh3ll.top/2.png">
-<meta property="og:image" content="https://www.w4y2sh3ll.top/3.png">
+<meta property="og:image" content="https://www.w4y2sh3ll.top/2022/12/07/buuCTF-pwn-0ctf-2017-EasiestPrintf/1.png">
+<meta property="og:image" content="https://www.w4y2sh3ll.top/2022/12/07/buuCTF-pwn-0ctf-2017-EasiestPrintf/2.png">
+<meta property="og:image" content="https://www.w4y2sh3ll.top/2022/12/07/buuCTF-pwn-0ctf-2017-EasiestPrintf/3.png">
 <meta property="article:published_time" content="2022-12-07T10:39:03.000Z">
 <meta property="article:modified_time" content="2022-12-11T07:35:28.742Z">
 <meta property="article:author" content="W4y2Sh3ll">
@@ -34,7 +34,7 @@
 <meta property="article:tag" content="BUU">
 <meta property="article:tag" content="PWN">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.w4y2sh3ll.top/1.png">
+<meta name="twitter:image" content="https://www.w4y2sh3ll.top/2022/12/07/buuCTF-pwn-0ctf-2017-EasiestPrintf/1.png">
   
   
   
@@ -89,7 +89,7 @@
 
 
   
-<meta name="generator" content="Hexo 7.2.0"></head>
+<meta name="generator" content="Hexo 7.1.1"></head>
 
 
 <body>
@@ -292,15 +292,15 @@
             
               <div class="markdown-body">
                 
-                <h1 id="0x01-分析"><a href="#0x01-分析" class="headerlink" title="0x01 分析"></a>0x01 分析</h1><p><img src="/1.png" srcset="/img/loading.gif" lazyload></p>
+                <h1 id="0x01-分析"><a href="#0x01-分析" class="headerlink" title="0x01 分析"></a>0x01 分析</h1><p><img src="/2022/12/07/buuCTF-pwn-0ctf-2017-EasiestPrintf/1.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>没开PIE</li>
 </ul>
-<p><img src="/2.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2022/12/07/buuCTF-pwn-0ctf-2017-EasiestPrintf/2.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>可以leak任意地址指向的数据</li>
 </ul>
-<p><img src="/3.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2022/12/07/buuCTF-pwn-0ctf-2017-EasiestPrintf/3.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>存在格式化字符串漏洞</li>
 </ul>
