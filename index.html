@@ -73,7 +73,7 @@
 
 
   
-<meta name="generator" content="Hexo 7.1.1"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 
 <body>
@@ -247,7 +247,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2024/04/11/ToDo/" target="_self">
         <div>
-          Musl Pwn
+          虚拟机逃逸Musl PwnKernel PwnLLVM PwnV8
         </div>
       </a>
 
@@ -261,6 +261,85 @@
           </div>
         
         
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/07/14/WKCTF2024-WriteUp-Pwn/" target="_self">
+          WKCTF2024 WriteUp Pwn
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/07/14/WKCTF2024-WriteUp-Pwn/" target="_self">
+        <div>
+          babystack白给一个leak，可以泄露libc地址，存在一个字节的栈溢出，可将rbp最低为置零，输入后第二次leave后rsp有几率指向输入，直接ROP，多跑几次就可以出。 Exp1234567891011121314151617181920212223242526272829303132333435#!/usr/bin/env python3# Date: 2024-07-14 09:31
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-07-14 19:24" pubdate>
+              2024-07-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CTF/WKCTF2024/" class="category-chain-item">WKCTF2024</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CTF/WKCTF2024/Wp/" class="category-chain-item">Wp</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/CTF/">#CTF</a>
+            
+              <a href="/tags/WP/">#WP</a>
+            
+              <a href="/tags/WKCTF2024/">#WKCTF2024</a>
+            
+          </div>
         
       </div>
     </article>
@@ -482,7 +561,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2024/04/11/WinPwn-%E7%AC%94%E8%AE%B0/" target="_self">
         <div>
-          
+          调试win_server监听某个程序，虚拟机中remote连接，raw_input()等待windbg attach之后再发送数据。 常用命令：bp [exe_name]+offset:断在offset处bp pe_base+offset:断在offset处lm:查看加载的dll及pe地址空间u addr:查看addr处的代码g:运行到断点p:单步步过t:单步步入!address [target_
         </div>
       </a>
 
@@ -663,9 +742,9 @@
             
               <a href="/tags/CTF/">#CTF</a>
             
-              <a href="/tags/HGAME/">#HGAME</a>
-            
               <a href="/tags/WP/">#WP</a>
+            
+              <a href="/tags/HGAME/">#HGAME</a>
             
           </div>
         
@@ -735,11 +814,11 @@
             
               <a href="/tags/CTF/">#CTF</a>
             
-              <a href="/tags/WP/">#WP</a>
-            
               <a href="/tags/NepNep/">#NepNep</a>
             
               <a href="/tags/CatCtf/">#CatCtf</a>
+            
+              <a href="/tags/WP/">#WP</a>
             
           </div>
         
@@ -770,87 +849,6 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
             <time datetime="2022-12-10 13:39" pubdate>
-              2022-12-10
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/CTF/BUU/" class="category-chain-item">BUU</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/CTF/BUU/Pwn/" class="category-chain-item">Pwn</a>
-  
-  
-
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/CTF/">#CTF</a>
-            
-              <a href="/tags/WP/">#WP</a>
-            
-              <a href="/tags/BUU/">#BUU</a>
-            
-              <a href="/tags/PWN/">#PWN</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/12/10/arr-sun-2016/" target="_self">
-          arr_sun_2016
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/12/10/arr-sun-2016/" target="_self">
-        <div>
-          分析  没开PIE和RELRO    有system函数    v1为int，输入负数绕过对v1的检测，v5[v1]时将v1当成unsigned int用，因此可以修改v5后任意地址的值    返回地址下面有一个栈地址，可以当作sh的指针  思路 修改返回地址为ret，再call system，目的是越过返回地址和栈地址中间的那个栈帧 修改栈地址为sh，距离返回地址的偏移为0x24  Exp123
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-12-10 13:33" pubdate>
               2022-12-10
             </time>
           </div>
